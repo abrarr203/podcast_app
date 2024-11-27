@@ -86,47 +86,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (index == 0) {
-            // Check if the Search icon is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      HomeScreen()), // Replace with your Search page widget
-            );
+            Navigator.pushNamed(context, HomeScreen.ScreenRoute);
           }
           if (index == 1) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      SearchPage()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => SearchPage()),
             );
           }
           if (index == 2) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ProfileScreen()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
             );
           }
         },
         type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: '',
-          ),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
         ],
       ),
       body: Stack(
@@ -688,9 +667,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _sharedPodcastNames[
                                 index], // Display the shared podcast name
                             style: TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 10, fontWeight: FontWeight.w700),
                             textAlign: TextAlign.center,
+                            softWrap: false,
                           ),
                         ],
                       );

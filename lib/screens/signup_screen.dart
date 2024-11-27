@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:podcast_app/constraints.dart';
 import 'package:podcast_app/screens/home_screen.dart';
 import 'package:podcast_app/screens/login_screen.dart';
 
@@ -16,6 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   GlobalKey<FormState> _foromstate = GlobalKey();
   final emailRegex =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+
   void openSigninScreen() {
     Navigator.of(context).pushReplacementNamed(LoginScreen.ScreenRoute);
   }
@@ -27,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -44,11 +46,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   Text(
                     "SIGN UP",
                     style: GoogleFonts.robotoCondensed(
-                        fontSize: 40, fontWeight: FontWeight.bold),
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: textColor),
                   ),
                   Text(
                     "Welcome Here you can sign up ",
-                    style: GoogleFonts.robotoCondensed(fontSize: 18),
+                    style: GoogleFonts.robotoCondensed(
+                        fontSize: 18, color: kLightColor),
                   ),
                   const SizedBox(height: 45),
                   Padding(
@@ -70,10 +75,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                             return null;
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Username",
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.person, color: textColor),
                           ),
                         ),
                       ),
@@ -100,10 +105,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                             return null;
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(Icons.email, color: textColor),
                           ),
                           keyboardType: TextInputType.emailAddress,
                         ),
@@ -137,16 +142,19 @@ class _SignupScreenState extends State<SignupScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: _isObscured,
                           decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.password),
+                              prefixIcon:
+                                  Icon(Icons.password, color: textColor),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
                                     _isObscured = !_isObscured;
                                   });
                                 },
-                                icon: Icon(_isObscured
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
+                                icon: Icon(
+                                    _isObscured
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: iconColor),
                               ),
                               border: InputBorder.none,
                               hintText: "Password"),
@@ -174,7 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               fontSize: 20),
                         )),
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 171, 19, 95),
+                            color: primaryColor,
                             borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
@@ -186,14 +194,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       Text(
                         "Already a member? ",
                         style: GoogleFonts.robotoCondensed(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                            color: textColor, fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
                         onTap: openSigninScreen,
                         child: Text(
-                          "Sign Up",
+                          "Log in",
                           style: GoogleFonts.robotoCondensed(
-                              color: Colors.red, fontWeight: FontWeight.bold),
+                              color: primaryColor, fontWeight: FontWeight.bold),
                         ),
                       )
                     ],

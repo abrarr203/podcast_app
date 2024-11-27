@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:podcast_app/constraints.dart';
 import 'package:podcast_app/screens/home_screen.dart';
 import 'package:podcast_app/screens/signup_screen.dart';
 
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: backgroundColor, // Use backgroundColor
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -45,11 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "SIGN IN",
                     style: GoogleFonts.robotoCondensed(
-                        fontSize: 40, fontWeight: FontWeight.bold),
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: textColor), // Use textColor
                   ),
                   Text(
                     "Welcome back Nice to see you again",
-                    style: GoogleFonts.robotoCondensed(fontSize: 18),
+                    style: GoogleFonts.robotoCondensed(
+                        fontSize: 18, color: iconColor), // Use textColor
                   ),
                   SizedBox(height: 50),
                   Padding(
@@ -74,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Username",
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.person,
+                                color: textColor), // Use iconColor
                           ),
                         ),
                       ),
@@ -95,7 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               return 'Password cannot be empty.';
                             }
 
-                            // Regex for at least 8 characters, one letter, one number, and one special character
                             final regex = RegExp(
                                 r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
                             if (!regex.hasMatch(value)) {
@@ -106,16 +109,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           obscureText: _isObscured,
                           decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.password),
+                              prefixIcon: const Icon(Icons.password,
+                                  color: textColor), // Use iconColor
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
                                     _isObscured = !_isObscured;
                                   });
                                 },
-                                icon: Icon(_isObscured
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
+                                icon: Icon(
+                                  _isObscured
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: iconColor,
+                                ),
                               ),
                               border: InputBorder.none,
                               hintText: "Password"),
@@ -144,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 20),
                         )),
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 171, 19, 95),
+                            color: primaryColor, // Use primaryColor
                             borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
@@ -156,14 +163,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Not yet a member? ",
                         style: GoogleFonts.robotoCondensed(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                            color: textColor,
+                            fontWeight: FontWeight.bold), // Use textColor
                       ),
                       GestureDetector(
                         onTap: openSignupScreen,
                         child: Text(
                           "Sign up Now",
                           style: GoogleFonts.robotoCondensed(
-                              color: Colors.red, fontWeight: FontWeight.bold),
+                              color: primaryColor,
+                              fontWeight:
+                                  FontWeight.bold), // Use secondaryColor
                         ),
                       )
                     ],

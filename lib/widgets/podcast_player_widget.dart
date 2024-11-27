@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:podcast_app/app_data.dart';
-import 'package:podcast_app/constraints.dart';
+import 'package:podcast_app/constraints.dart'; // Or import colors.dart if defined elsewhere
 import 'package:podcast_app/models/user.dart';
 
 class PodcastPlayerWidget extends StatefulWidget {
@@ -35,20 +35,18 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
     return artist.username;
   }
 
-// ensures that the widget is ready to handle audio playback
   @override
   void initState() {
     super.initState();
 
     widget.audioPlayer.setSourceAsset(widget.audioPath).then((_) {
-      //Tracks the total duration of the audio file.
       widget.audioPlayer.onDurationChanged.listen((duration) {
         setState(() {
           totalDuration = duration.inMilliseconds.toDouble();
           totalTime = _formatDuration(duration);
         });
       });
-// Updates the current playback position.
+
       widget.audioPlayer.onPositionChanged.listen((position) {
         setState(() {
           currentPosition = position.inMilliseconds.toDouble();
@@ -89,7 +87,7 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
 
     return Container(
       decoration: BoxDecoration(
-        color: kWhiteColor,
+        color: backgroundColor, // Set background color
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(35.0),
           topRight: Radius.circular(35.0),
@@ -114,7 +112,7 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
             child: Text(
               widget.name,
               style: TextStyle(
-                  color: kPrimaryColor,
+                  color: textColor, // Use primaryColor
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -124,7 +122,7 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
             child: Text(
               getArtistName(widget.artist),
               style: TextStyle(
-                  color: kLightColor,
+                  color: iconColor, // Use secondaryColor
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -134,9 +132,11 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             width: double.infinity,
             child: LinearProgressIndicator(
-              backgroundColor: kLightColor2,
+              backgroundColor:
+                  iconColor.withOpacity(0.3), // Slightly lightened iconColor
               value: totalDuration > 0 ? currentPosition / totalDuration : 0,
-              valueColor: AlwaysStoppedAnimation(kPrimaryColor),
+              valueColor: AlwaysStoppedAnimation(
+                  textColor), // Use primaryColor for progress bar
             ),
           ),
           Padding(
@@ -146,17 +146,15 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
                 Text(
                   currentTime,
                   style: TextStyle(
-                      color: kLightColor,
+                      color: iconColor, // Use secondaryColor
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold),
                 ),
-                Expanded(
-                  child: Container(),
-                ),
+                Expanded(child: Container()),
                 Text(
                   totalTime,
                   style: TextStyle(
-                      color: kLightColor,
+                      color: iconColor, // Use secondaryColor
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold),
                 ),
@@ -171,7 +169,7 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
               children: [
                 Icon(
                   Icons.skip_previous,
-                  color: kPrimaryColor,
+                  color: textColor, // Use primaryColor
                   size: 0.12 * size.width,
                 ),
                 GestureDetector(
@@ -180,13 +178,13 @@ class _PodcatsPlayerWidgetState extends State<PodcastPlayerWidget> {
                     isPlaying
                         ? Icons.pause_circle_outline
                         : Icons.play_circle_outline,
-                    color: kPrimaryColor,
+                    color: textColor, // Use primaryColor
                     size: 0.18 * size.width,
                   ),
                 ),
                 Icon(
                   Icons.skip_next,
-                  color: kPrimaryColor,
+                  color: textColor, // Use primaryColor
                   size: 0.12 * size.width,
                 ),
               ],

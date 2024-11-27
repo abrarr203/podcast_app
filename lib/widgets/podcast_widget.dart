@@ -33,26 +33,17 @@ class PodcastWidget extends StatelessWidget {
       onTap: () => selectedPodcast(context),
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(15),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Column(
-          children: [
-            Image.asset(
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset(
               img,
+              height: 200,
               fit: BoxFit.cover,
-              height: 100, // Adjust based on layout
-              width: 100, // Ensure square or rectangular shape
             ),
-            SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

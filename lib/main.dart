@@ -25,12 +25,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => LoginScreen(),
+        '/': (ctx) => splash_screen(),
+        LoginScreen.ScreenRoute: (ctx) => LoginScreen(),
         SignupScreen.ScreenRoute: (ctx) => SignupScreen(),
-        HomeScreen.ScreenRoute: (ctx) => HomeScreen(),
         PlayingScreen.ScreenRoute: (ctx) => PlayingScreen(),
         SearchPage.ScreenRoute: (ctx) => SearchPage(),
         ProfileScreen.ScreenRoute: (ctx) => ProfileScreen(),
+        HomeScreen.ScreenRoute: (ctx) => HomeScreen()
       },
     );
   }

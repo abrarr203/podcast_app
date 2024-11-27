@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:podcast_app/app_data.dart';
+import 'package:podcast_app/constraints.dart';
 import 'package:podcast_app/widgets/podcast_widget.dart';
 import 'package:podcast_app/screens/search.dart';
 import 'package:podcast_app/screens/profile.dart';
@@ -18,10 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor, // Use the background color constant
         elevation: 0,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundColor, // Use the background color constant
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -72,22 +73,22 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        children: [
           Text(
             'Hey, User!',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: textColor, // Use the text color constant
             ),
           ),
           CircleAvatar(
             radius: 24,
-            backgroundColor: Colors.grey,
+            backgroundColor: iconColor, // Use the icon color constant
             child: Icon(
               Icons.account_circle_outlined,
               size: 32,
-              color: Colors.black,
+              color: textColor, // Use the text color constant
             ),
           ),
         ],
@@ -101,16 +102,15 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: textColor, // Use the text color constant
         ),
       ),
     );
   }
 
-  // Recently Played Horizontal List
   Widget _buildHorizontalList() {
     return SizedBox(
       height: 120, // Height for rectangular items
@@ -141,9 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent:
-              MediaQuery.of(context).size.width / 2 - 20, // Two items per row
-          childAspectRatio: 1.0, // Ensuring square items in the grid
+          maxCrossAxisExtent: MediaQuery.of(context).size.width / 2 - 20,
+          childAspectRatio: 1.0, // This will make the grid items square
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
         ),

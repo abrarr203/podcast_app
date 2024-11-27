@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:podcast_app/app_data.dart';
+import 'package:podcast_app/constraints.dart';
 import 'package:podcast_app/models/podcast.dart';
 import 'package:podcast_app/models/user.dart';
 import 'package:podcast_app/screens/home_screen.dart';
@@ -14,7 +15,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   String query = '';
-  @override
+
   @override
   Widget build(BuildContext context) {
     // تصفية البيانات بناءً على النص المدخل
@@ -34,12 +35,12 @@ class _SearchPageState extends State<SearchPage> {
         centerTitle: true,
         title: Text(
           'Search',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         elevation: 0,
       ),
-      backgroundColor: Color.fromARGB(255, 228, 228, 228),
+      backgroundColor: backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -50,13 +51,13 @@ class _SearchPageState extends State<SearchPage> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search...',
-                hintStyle: TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
+                hintStyle: TextStyle(color: iconColor),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: backgroundColor,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60.0),
                     borderSide: BorderSide.none),
@@ -65,7 +66,7 @@ class _SearchPageState extends State<SearchPage> {
                     borderSide: BorderSide.none),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60.0),
-                    borderSide: BorderSide.none),
+                    borderSide: BorderSide(color: textColor)),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 3.0, horizontal: 20.0),
               ),
@@ -91,12 +92,11 @@ class _SearchPageState extends State<SearchPage> {
                       margin: EdgeInsets.symmetric(vertical: 5.0),
                       padding: EdgeInsets.all(5.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: backgroundColor,
                         borderRadius: BorderRadius.circular(50.0),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(255, 105, 105, 105)
-                                .withOpacity(0.5),
+                            color: kLightColor.withOpacity(0.5),
                             blurRadius: 4,
                             offset: Offset(0, 2),
                           ),
@@ -109,21 +109,10 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         title: Text(
                           filteredUsers[index].username,
-                          style:
-                              TextStyle(color: Color.fromARGB(180, 66, 66, 66)),
+                          style: TextStyle(color: textColor.withOpacity(0.7)),
                         ),
                         onTap: () {
-                          //  Navigator.push(
-                          //    context,
-                          //    MaterialPageRoute(
-                          //        builder: (context) => userprofile_screen(
-                          //        name: filteredUsers[index]['name'],
-                          //        image: filteredUsers[index]['image'],
-                          //        bio: filteredUsers[index]['bio'],
-                          //      ),
-                          //    ),
-                          //  );
-                          //go to the user profile that we tap
+                          // Navigate to user profile when tapped
                         },
                       ),
                     );
@@ -145,12 +134,11 @@ class _SearchPageState extends State<SearchPage> {
                       margin: EdgeInsets.symmetric(vertical: 5.0),
                       padding: EdgeInsets.all(5.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: backgroundColor,
                         borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(255, 105, 105, 105)
-                                .withOpacity(0.5),
+                            color: kLightColor.withOpacity(0.5),
                             blurRadius: 4,
                             offset: Offset(0, 2),
                           ),
@@ -168,12 +156,9 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         title: Text(
                           filteredPodcasts[index].podcastName,
-                          style:
-                              TextStyle(color: Color.fromARGB(180, 66, 66, 66)),
+                          style: TextStyle(color: textColor.withOpacity(0.7)),
                         ),
-                        // subtitle: Text(filteredPodcasts[index]['duration']),
-                        trailing: Icon(Icons.play_arrow,
-                            color: Color.fromARGB(186, 0, 0, 0)),
+                        trailing: Icon(Icons.play_arrow, color: iconColor),
                         onTap: () {
                           Navigator.of(context).pushNamed(
                             PlayingScreen.ScreenRoute,
@@ -184,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                               'audio': filteredPodcasts[index].podcastAudio,
                             },
                           );
-                          //go to play podcast and play the taped podcast
+                          // Navigate to playing podcast
                         },
                       ),
                     );
@@ -202,47 +187,26 @@ class _SearchPageState extends State<SearchPage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (index == 0) {
-            // Check if the Search icon is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      HomeScreen()), // Replace with your Search page widget
-            );
+            Navigator.pushNamed(context, HomeScreen.ScreenRoute);
           }
           if (index == 1) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      SearchPage()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => SearchPage()),
             );
           }
           if (index == 2) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ProfileScreen()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
             );
           }
         },
         type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: '',
-          ),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
         ],
       ),
     );

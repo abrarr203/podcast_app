@@ -36,7 +36,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
     audioPath = routeArgs['audio'];
 
     return Scaffold(
-      backgroundColor: kSecondaryColor,
+      backgroundColor: iconColor,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -44,16 +44,14 @@ class _PlayingScreenState extends State<PlayingScreen> {
         leading: GestureDetector(
           child: Icon(
             Icons.arrow_back,
-            color: kPrimaryColor,
+            color: textColor,
           ),
           onTap: () => Navigator.pushNamed(context, HomeScreen.ScreenRoute),
         ),
         title: Text(
           'Now Playing',
           style: TextStyle(
-              fontSize: 15.0,
-              color: kPrimaryColor,
-              fontWeight: FontWeight.w800),
+              fontSize: 15.0, color: textColor, fontWeight: FontWeight.w800),
         ),
       ),
       body: PodcastPlayerWidget(
