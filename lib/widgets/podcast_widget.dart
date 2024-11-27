@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:podcast_app/screens/playing_screen.dart';
 
 class PodcastWidget extends StatelessWidget {
-  const PodcastWidget(
-      {super.key,
-      required this.name,
-      required this.img,
-      required this.id,
-      required this.audio});
+  const PodcastWidget({
+    super.key,
+    required this.name,
+    required this.img,
+    required this.id,
+    required this.audio,
+  });
 
   final String name;
   final String img;
@@ -32,28 +33,26 @@ class PodcastWidget extends StatelessWidget {
       onTap: () => selectedPodcast(context),
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(15),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Column(
+          children: [
+            Image.asset(
               img,
-              height: 250,
               fit: BoxFit.cover,
+              height: 100, // Adjust based on layout
+              width: 100, // Ensure square or rectangular shape
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: Text(
+            SizedBox(height: 8),
+            Text(
               name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

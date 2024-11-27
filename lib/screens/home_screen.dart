@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:podcast_app/app_data.dart';
-import 'package:podcast_app/screens/profile.dart';
-import 'package:podcast_app/screens/search.dart';
 import 'package:podcast_app/widgets/podcast_widget.dart';
+import 'package:podcast_app/screens/search.dart';
+import 'package:podcast_app/screens/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,69 +18,145 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: GridView(
-        padding: const EdgeInsets.all(10),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 7 / 8,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeaderSection(),
+              const SizedBox(height: 20),
+              _buildSectionTitle('Recently Played'),
+              _buildHorizontalList(),
+              const SizedBox(height: 20),
+              _buildSectionTitle('Popular Podcasts'),
+              _buildPodcastGrid(),
+            ],
+          ),
         ),
-        children: podcastData
-            .map((podcastData) => PodcastWidget(
-                  name: podcastData.podcastName,
-                  img: podcastData.podcastImg,
-                  id: podcastData.artistId,
-                  audio: podcastData.podcastAudio,
-                ))
-            .toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (index == 0) {
-            // Check if the Search icon is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      HomeScreen()), // Replace with your Search page widget
-            );
+            Navigator.pushNamed(context, HomeScreen.ScreenRoute);
           }
           if (index == 1) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      SearchPage()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => SearchPage()),
             );
           }
           if (index == 2) {
-            // Check if the Search icon is tapped
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ProfileScreen()), // Replace with your Search page widget
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
             );
           }
         },
         type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
+        ],
+      ),
+    );
+  }
+
+  // Header Section
+  Widget _buildHeaderSection() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          Text(
+            'Hey, User!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: '',
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: Colors.grey,
+            child: Icon(
+              Icons.account_circle_outlined,
+              size: 32,
+              color: Colors.black,
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  // Section Title
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  // Recently Played Horizontal List
+  Widget _buildHorizontalList() {
+    return SizedBox(
+      height: 120, // Height for rectangular items
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        itemCount: podcastData.length > 5 ? 5 : podcastData.length,
+        separatorBuilder: (context, index) =>
+            const SizedBox(width: 12), // Space between items
+        itemBuilder: (context, index) {
+          final podcast = podcastData[index];
+          return PodcastWidget(
+            name: podcast.podcastName,
+            img: podcast.podcastImg,
+            id: podcast.artistId,
+            audio: podcast.podcastAudio,
+          );
+        },
+      ),
+    );
+  }
+
+  // Popular Podcasts Grid
+  Widget _buildPodcastGrid() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent:
+              MediaQuery.of(context).size.width / 2 - 20, // Two items per row
+          childAspectRatio: 1.0, // Ensuring square items in the grid
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        itemCount: podcastData.length,
+        itemBuilder: (context, index) {
+          final podcast = podcastData[index];
+          return PodcastWidget(
+            name: podcast.podcastName,
+            img: podcast.podcastImg,
+            id: podcast.artistId,
+            audio: podcast.podcastAudio,
+          );
+        },
       ),
     );
   }
