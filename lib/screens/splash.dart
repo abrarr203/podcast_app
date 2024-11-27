@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:podcast_app/constraints.dart';
+import 'package:podcast_app/screens/login_screen.dart';
 import 'dart:async';
 
-import 'package:podcast_app/screens/signup_screen.dart';
 // import 'package:podcast_app/screens/start.dart';
 
 class splash_screen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _splash_screenState extends State<splash_screen> {
     // الانتقال بعد 3 دقائق
     Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => SignupScreen()));
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 

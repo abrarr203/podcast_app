@@ -3,6 +3,7 @@ import 'dart:ui'; // For BackdropFilter
 import 'dart:io'; // For File
 import 'package:file_picker/file_picker.dart'; // Add this import
 import 'package:image_picker/image_picker.dart';
+import 'package:podcast_app/constraints.dart';
 import 'package:podcast_app/screens/home_screen.dart';
 import 'package:podcast_app/screens/search.dart';
 
@@ -83,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (index == 0) {
@@ -128,8 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         radius: 50,
                         backgroundImage: _profileImageFile != null
                             ? FileImage(_profileImageFile!)
-                            : NetworkImage('https://via.placeholder.com/150')
-                                as ImageProvider,
+                            : AssetImage('assets/images/001.png'),
                       ),
                       SizedBox(
                         width: 30,

@@ -9,3 +9,4 @@ const Color backgroundColor =
     Color.fromARGB(255, 228, 228, 228); // Example background color
 const Color textColor = Color(0xFF000000); // Example text color
 const Color iconColor = Color(0xFF9E9E9E); // Example icon color
+const Color btnColor = Color(0xFFFAF3E0);

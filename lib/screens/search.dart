@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                     borderSide: BorderSide.none),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60.0),
-                    borderSide: BorderSide.none),
+                    borderSide: BorderSide(color: textColor)),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60.0),
                     borderSide: BorderSide(color: textColor)),
@@ -83,40 +83,43 @@ class _SearchPageState extends State<SearchPage> {
                   'Users',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: filteredUsers.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 5.0),
-                      padding: EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        borderRadius: BorderRadius.circular(50.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: kLightColor.withOpacity(0.5),
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
+                Flexible(
+                  // Use Flexible to constrain the height
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: filteredUsers.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 5.0),
+                        padding: EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          borderRadius: BorderRadius.circular(50.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kLightColor.withOpacity(0.5),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                AssetImage(filteredUsers[index].userImg),
                           ),
-                        ],
-                      ),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              AssetImage(filteredUsers[index].userImg),
+                          title: Text(
+                            filteredUsers[index].username,
+                            style: TextStyle(color: textColor.withOpacity(0.7)),
+                          ),
+                          onTap: () {
+                            // Navigate to user profile when tapped
+                          },
                         ),
-                        title: Text(
-                          filteredUsers[index].username,
-                          style: TextStyle(color: textColor.withOpacity(0.7)),
-                        ),
-                        onTap: () {
-                          // Navigate to user profile when tapped
-                        },
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ],
               if (filteredPodcasts.isNotEmpty) ...[
@@ -125,55 +128,56 @@ class _SearchPageState extends State<SearchPage> {
                   'Podcasts',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: filteredPodcasts.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 5.0),
-                      padding: EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        borderRadius: BorderRadius.circular(20.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: kLightColor.withOpacity(0.5),
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
-                          child: Image.asset(
-                            filteredPodcasts[index].podcastImg,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: filteredPodcasts.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 5.0),
+                        padding: EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          borderRadius: BorderRadius.circular(20.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kLightColor.withOpacity(0.5),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
-                        title: Text(
-                          filteredPodcasts[index].podcastName,
-                          style: TextStyle(color: textColor.withOpacity(0.7)),
+                        child: ListTile(
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Image.asset(
+                              filteredPodcasts[index].podcastImg,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          title: Text(
+                            filteredPodcasts[index].podcastName,
+                            style: TextStyle(color: textColor.withOpacity(0.7)),
+                          ),
+                          trailing: Icon(Icons.play_arrow, color: iconColor),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              PlayingScreen.ScreenRoute,
+                              arguments: {
+                                'name': filteredPodcasts[index].podcastName,
+                                'id': filteredPodcasts[index].artistId,
+                                'img': filteredPodcasts[index].podcastImg,
+                                'audio': filteredPodcasts[index].podcastAudio,
+                              },
+                            );
+                          },
                         ),
-                        trailing: Icon(Icons.play_arrow, color: iconColor),
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            PlayingScreen.ScreenRoute,
-                            arguments: {
-                              'name': filteredPodcasts[index].podcastName,
-                              'id': filteredPodcasts[index].artistId,
-                              'img': filteredPodcasts[index].podcastImg,
-                              'audio': filteredPodcasts[index].podcastAudio,
-                            },
-                          );
-                          // Navigate to playing podcast
-                        },
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ],
               if (filteredUsers.isEmpty && filteredPodcasts.isEmpty)
